@@ -8,24 +8,10 @@
         <div id="app" class="wrapper">
             <section id="main">
                 <div class="container">
-                    <h1>СКФ: {{skf}} <br>
-                        <!--Формула:{{formula}} <br> -->
-                        Пол:{{sex}} <br>
-                        Раса:{{rasa}} <br>
-                        Креатинин:{{kr}} <br>
-                        Цистатин:{{css}} <br>
-                        Масса тела:{{weight}} <br>
-                        Возраст:{{age}} <br>
-                    </h1>
 
-                    <div class="bordered">
-                        <label><input v-model="formula" type="radio" name="formula" value="ckdepi-2009" id="ckdepi-2009"><div></div><span>Формула CKD-EPI 2009 года (на основе концентрации креатинина в сыворотке)</span></label>
-                        <!--label><input v-model="formula" type="radio" name="formula" value="ckdepi-2012" id="ckdepi-2012"><div></div><span>Формула CKD-EPI 2012 года (на основе концентрации цистатина С в сыворотке)</span></label>
-                        <label><input v-model="formula" type="radio" name="formula" value="ckdepi-2012-ck" id="ckdepi-2012-ck"><div></div><span>Формула CKD-EPI 2012 года (на основе концентрации креатинина и цистатина С в сыворотке)</span></label-->
-                        <label><input v-model="formula" type="radio" name="formula" value="mdrd" id="mdrd"><div></div><span>Формула MDRD</span></label>
-                        <label><input v-model="formula" type="radio" name="formula" value="kokrofta-golta" id="kokrofta-golta"><div></div><span>Формула Кокрофта-Голта</span></label>
-                    </div>
-                    <div class="params" v-if="formula">
+
+
+                    <div class="params">
                         <div class="bordered">
                             <label><input v-model="sex" type="radio" name="sex" value="woman" id="woman"><div></div><span>Женский</span></label>
                             <label><input v-model="sex" type="radio" name="sex" value="man" id="man"><div></div><span>Мужской</span></label>
@@ -46,7 +32,7 @@
                             <input v-model="css" type="text"/>
                         </div>
 
-                        <div class="bordered" v-if="formula=='kokrofta-golta'">
+                        <div class="bordered">
                             <p>Масса тела, кг</p>
                             <input v-model="weight" type="text"/>
                         </div>
@@ -56,7 +42,26 @@
                             <input v-model="age" type="text"/>
                         </div>
                     </div>
+                    <div class="bordered">
+                        <label><input v-model="formula" type="radio" name="formula" value="ckdepi-2009" id="ckdepi-2009"><div></div><span>Формула CKD-EPI 2009 года (на основе концентрации креатинина в сыворотке)</span></label>
+                        <!--label><input v-model="formula" type="radio" name="formula" value="ckdepi-2012" id="ckdepi-2012"><div></div><span>Формула CKD-EPI 2012 года (на основе концентрации цистатина С в сыворотке)</span></label>
+                        <label><input v-model="formula" type="radio" name="formula" value="ckdepi-2012-ck" id="ckdepi-2012-ck"><div></div><span>Формула CKD-EPI 2012 года (на основе концентрации креатинина и цистатина С в сыворотке)</span></label-->
+                        <label><input v-model="formula" type="radio" name="formula" value="mdrd" id="mdrd"><div></div><span>Формула MDRD</span></label>
+                        <label><input v-model="formula" type="radio" name="formula" value="kokrofta-golta" id="kokrofta-golta"><div></div><span>Формула Кокрофта-Голта</span></label>
+                    </div>
+                    <h2 v-if="skf && skf!='Infinity'">СКФ: {{skf.toFixed(2)}}</h2>
                 </div>    
+
+                <!--small>
+                    Формула:{{formula}} <br>
+                    Пол:{{sex}} <br>
+                    Раса:{{rasa}} <br>
+                    Креатинин:{{kr}} <br>
+                    Цистатин:{{css}} <br>
+                    Масса тела:{{weight}} <br>
+                    Возраст:{{age}} <br>
+                </small-->
+                 
             </section>
         </div>
     </body>
