@@ -33,6 +33,13 @@ const googleAPIKey = 'AIzaSyC3c3CMpjbS_c43jYeSSm3Fu2CQnoNu6PY'
             coords: [10, 10, 10, 15, 15, 15, 15, 10],
             type: 'poly'
           },
+          icon: {
+            path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
+            fillColor: '#FF0000',
+            fillOpacity: .5,
+            strokeWeight: 0,
+        },
+          mapTypeId: "satellite",
         }
       },
       async created (){
