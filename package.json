@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "core-js": "^3.15.2",
+    "date-fns": "^2.23.0",
     "lodash": "^4.17.21",
     "regenerator-runtime": "^0.13.7",
     "vue": "^2.6.11",

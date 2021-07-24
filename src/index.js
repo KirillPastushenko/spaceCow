@@ -1,13 +1,20 @@
 import './scss/main.scss';
 import Vue from 'vue';
 import * as VueGoogleMaps from 'vue2-google-maps';
-import { getTrack } from './components/fetch'
+import {
+  googleAPIKey,
+  getFullTrack,
+  getLastStates,
+  getMonth,
+  getWeek,
+  getToday 
+} from './components/fetch'
 
-const googleAPIKey = 'AIzaSyC3c3CMpjbS_c43jYeSSm3Fu2CQnoNu6PY'
-//const laststates = getDataFromServer('laststates');
+import { fromUnixTime, format  } from 'date-fns';
+import  ruLocale from 'date-fns/locale/ru';
 
  
- Vue.use(VueGoogleMaps, {
+Vue.use(VueGoogleMaps, {
     load: {
       key: googleAPIKey,
       libraries: 'places'
@@ -23,42 +30,55 @@ const googleAPIKey = 'AIzaSyC3c3CMpjbS_c43jYeSSm3Fu2CQnoNu6PY'
       el: '#root',
       data() {
         return {
-          place: 'Соль-Илецк',
-          center: {
-            lat: 51.0669629,
-            lng: 55.125332
-          },
-          markers: this.getTracks,
-          shape: {
-            coords: [10, 10, 10, 15, 15, 15, 15, 10],
-            type: 'poly'
-          },
-          icon: {
-            path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
-            fillColor: '#FF0000',
-            fillOpacity: .5,
-            strokeWeight: 0,
-        },
+          place: 'Кумакский',
           mapTypeId: "satellite",
+          stat: {},
+          activeButton: 'last',
+          icon: {
+            path: "M-10,0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0",
+            fillColor: '#FF0000',
+            fillOpacity: .4,
+            strokeWeight: 0,
+          },
+          center: {
+            lat: 51.0799629,
+            lng: 55.095332
+          },
         }
       },
-      async created (){
-        await this.getTracks()
+      async created(){
+        await this.getLastPosition();
       },
       methods: {
-        updatePlace(what) {
-          this.place = {
-            lat: what.geometry.location.lat(),
-            lng: what.geometry.location.lng()
-          };
+        async getLastPosition() {
+          this.stat = await getLastStates();
+          this.activeButton = 'last';
         },
-        async getTracks() {
-          this.markers = await getTrack();
-        } 
+        async getFullTrack() {
+          this.stat = await getFullTrack();
+          this.activeButton = 'full';
+        },
+        async getMonth() {
+          this.stat = await getMonth();
+          this.activeButton = 'month';
+        },
+        async getWeek() {
+          this.stat = await getWeek();
+          this.activeButton = 'week';
+        },
+        async getToday() {
+          this.stat = await getToday();
+          this.activeButton = 'today';
+        },
+        getFormatedDate(unixtime) {
+          const date = fromUnixTime(unixtime);
+          return format(date, 'd MMMM yyyy HH:mm', {
+            locale: ruLocale
+          });
+        }
       }
     });
   });
-
 
 
 

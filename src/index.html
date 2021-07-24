@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
         <title>SpaceCow</title>
      </head>
     <body>
         <div id="root">
-            <gmap-place-input
-                default-place="Кумакский"
-                @place_changed="updatePlace"
-            >
-            </gmap-place-input>
-            <h2>{{place && place.lat}}, {{place && place.lng}} </h2>
-
-            <br><br><br>
-
+            <div id="buttons">
+                <button :class="{ active: activeButton=='last' }" @click="getLastPosition">Последняя позиция</button>
+                <button :class="{ active: activeButton=='today' }" @click="getToday">Сегодня</button>
+                <button :class="{ active: activeButton=='week' }" @click="getWeek">Неделя</button>
+                <button :class="{ active: activeButton=='month' }" @click="getMonth">Месяц</button>
+                <button :class="{ active: activeButton=='full' }" @click="getFullTrack">Весь путь</button>
+            </div>
+            <div id="stat">
+                <div v-if="stat.lastState">
+                    Последний раз на связи: <b>{{getFormatedDate(stat.lastState.ts)}}</b><br>
+                    Погрешность определения: <b>{{stat.lastState.precision}}м</b><br>
+                    Заряд батареи: <b>{{stat.lastState.ipwr / 1000}}В</b><br>
+                    Температура: <b>{{stat.lastState.tmp}}°C</b><br>
+                </div>
+                <b v-if="stat.startDate">{{getFormatedDate(stat.startDate)}}</b>
+            </div>
             <google-map
                 :center="center" 
                 :zoom="15" 
@@ -22,7 +30,7 @@
                 style="width: 100%; height: 100vh"
             >
                 <google-marker
-                    v-for="m in markers" 
+                    v-for="m in stat.markers" 
                     :position="m.position" 
                     :clickable="true"
                     :draggable="true" 
@@ -31,6 +39,11 @@
                     :icon="icon"
                 >
                 </google-marker>
+                <gmap-polyline
+                    :path="stat.tracks"
+                    :options="{ strokeColor:'#FF0000', strokeOpacity: 0.8, strokeWeight: 0.8 }"
+                >
+                </gmap-polyline>
             </google-map>
         </div>
     </body>

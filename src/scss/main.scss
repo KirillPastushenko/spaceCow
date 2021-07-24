@@ -1,5 +1,6 @@
 /*{-webkit-box-sizing:border-box;box-sizing:border-box}
 #app{font-family:'Open Sans',sans-serif;font-size:16px}*/
+* {box-sizing: border-box;padding:0; margin: 0;font-family: Verdana;}
 label{display:block;cursor:pointer;position:relative;line-height:1.3}
 label:hover{background-color:#d8d8d8}
 label>div{position:absolute;width:100%;height:100%;left:0;top:0;z-index:0}
@@ -11,3 +12,40 @@ label>input,label>span{position:relative;z-index:1}
 .contai{max-width:320px;margin:0 auto}
 .flex-spb{display:flex;justify-content: space-between;}
 .aligh-center{text-align: center;}
+
+#buttons {
+    position: absolute;
+    bottom: 35px;
+    left: 10px;
+    z-index: 1;
+
+    & .active {
+        background-color: rgba(0,0,0,0.8);
+        border: solid 1px rgba(255,255,255,0.5);
+    }
+
+    button {
+        cursor: pointer;
+        color: #fff;
+        padding: 10px 7px;
+        background-color: rgba(0,0,0,0.5);
+        border: solid 1px rgba(255,255,255,0.3);
+    }
+
+    button:hover {
+        border: solid 1px rgba(255,255,255,0.5);
+    }
+}
+
+#stat {
+    position: absolute;
+    z-index: 1;
+    color: #fff;
+
+    top: 61px;
+    left: 10px;
+    font-size: 13px;
+    background-color: rgba(0,0,0,0.6);
+    padding: 10px;
+    pointer-events: none;
+}
