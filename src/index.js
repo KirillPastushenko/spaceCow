@@ -2,6 +2,7 @@ import './scss/main.scss';
 import Vue from 'vue';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import {
+  formatUnixtime,
   googleAPIKey,
   getFullTrack,
   getLastStates,
@@ -10,10 +11,7 @@ import {
   getToday 
 } from './components/fetch'
 
-import { fromUnixTime, format  } from 'date-fns';
-import  ruLocale from 'date-fns/locale/ru';
 
- 
 Vue.use(VueGoogleMaps, {
     load: {
       key: googleAPIKey,
@@ -24,7 +22,7 @@ Vue.use(VueGoogleMaps, {
 
   document.addEventListener('DOMContentLoaded', function() {
     Vue.component('google-map', VueGoogleMaps.Map);
-    Vue.component('google-marker', VueGoogleMaps.Marker);
+    Vue.component('gmap-marker', VueGoogleMaps.Marker);
 
     new Vue({
       el: '#root',
@@ -32,8 +30,8 @@ Vue.use(VueGoogleMaps, {
         return {
           place: 'Кумакский',
           mapTypeId: "satellite",
-          stat: {},
           activeButton: 'last',
+          stat: {},
           icon: {
             path: "M-10,0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0",
             fillColor: '#FF0000',
@@ -41,8 +39,18 @@ Vue.use(VueGoogleMaps, {
             strokeWeight: 0,
           },
           center: {
-            lat: 51.0799629,
-            lng: 55.095332
+            lat: 51.079365,
+            lng: 55.103577
+          },
+          infoContent: '',
+          infoWindowPos: null,
+          infoWinOpen: false,
+          currentMidx: null,
+          infoOptions: {
+            pixelOffset: {
+              width: 0,
+              height: -10
+            }
           },
         }
       },
@@ -53,28 +61,46 @@ Vue.use(VueGoogleMaps, {
         async getLastPosition() {
           this.stat = await getLastStates();
           this.activeButton = 'last';
+          this.infoWinOpen = false;
+          this.center = {
+            lat: this.stat.markers[0].position.lat,
+            lng: this.stat.markers[0].position.lng
+          }
         },
         async getFullTrack() {
           this.stat = await getFullTrack();
           this.activeButton = 'full';
+          this.infoWinOpen = false;
         },
         async getMonth() {
           this.stat = await getMonth();
           this.activeButton = 'month';
+          this.infoWinOpen = false;
         },
         async getWeek() {
           this.stat = await getWeek();
           this.activeButton = 'week';
+          this.infoWinOpen = false;
         },
         async getToday() {
           this.stat = await getToday();
           this.activeButton = 'today';
+          this.infoWinOpen = false;
         },
         getFormatedDate(unixtime) {
-          const date = fromUnixTime(unixtime);
-          return format(date, 'd MMMM yyyy HH:mm', {
-            locale: ruLocale
-          });
+          return formatUnixtime(unixtime);
+        },
+        toggleInfoWindow (marker, idx) {
+          this.infoWindowPos = marker.position;
+          this.infoContent = marker.infoText;
+          if (this.currentMidx == idx) {
+            this.infoWinOpen = !this.infoWinOpen;
+          }
+          else {
+            this.infoWinOpen = true;
+            this.currentMidx = idx;
+
+          }
         }
       }
     });

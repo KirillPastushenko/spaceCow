@@ -1,9 +1,9 @@
-import { getUnixTime, startOfToday, subMonths, subWeeks } from 'date-fns';
+import { getUnixTime, startOfToday, subMonths, subWeeks, fromUnixTime, format } from 'date-fns';
+import  ruLocale from 'date-fns/locale/ru';
 
-
-const autofonAPIURL = 'http://176.9.114.139:9002/jsonapi/';
 export const googleAPIKey = 'AIzaSyC3c3CMpjbS_c43jYeSSm3Fu2CQnoNu6PY'
 
+const autofonAPIURL = 'https://gprs.autofon.ru:9443/jsonapi/';
 const params = {
     key:'26ae6b396d8a402a84be28a32951dd57', 
     pwd: 'Wer461548'
@@ -15,13 +15,9 @@ const getURL = (APImethod) => {
     return url
 }
 
-
 const START_DATE = 1619901343;
 const NOW = getUnixTime(new Date())
 const INITIAL_DEVICE_ID = "166563";
-
-
-
 
 const getDataFromServer = async (APImethod, reqest) => {
     try {
@@ -50,7 +46,8 @@ const getTrack = async (startDate=START_DATE, endDate=NOW) => {
             position: {
               lat: point.lat,
               lng: point.lng
-            }
+            },
+            infoText: point.ts
         }
     });
     const tracks = points.map(function(point){
@@ -59,8 +56,14 @@ const getTrack = async (startDate=START_DATE, endDate=NOW) => {
             lng: point.lng
         }
     });
-    console.log({markers, tracks, startDate});
     return {markers, tracks, startDate};
+};
+
+export const formatUnixtime = (unixtime) => {
+    const date = fromUnixTime(unixtime);
+    return format(date, 'd MMMM yyyy HH:mm', {
+      locale: ruLocale
+    });
 }
 
 export const getLastStates = async () => {
@@ -70,7 +73,8 @@ export const getLastStates = async () => {
         position: {
             lat: lastState.lat,
             lng: lastState.lng
-          }
+        },
+            infoText: lastState.ts
     }];
     const tracks = [];
     return {markers, tracks, lastState};
