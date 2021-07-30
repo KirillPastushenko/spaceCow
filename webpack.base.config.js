@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+ 
+
 const PATHS = {
     src: path.join(__dirname, './src'),
     dist: path.join(__dirname, './public'),
@@ -112,6 +115,11 @@ module.exports = {
                 from: `${PATHS.src}/static`, 
                 to: ''
             }
-        ]})
+        ]}),
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true,
+            maximumFileSizeToCacheInBytes: 6194304,
+        }),
     ]
 }

@@ -19,7 +19,8 @@
     "lodash": "^4.17.21",
     "regenerator-runtime": "^0.13.7",
     "vue": "^2.6.11",
-    "vue2-google-maps": "^0.10.7"
+    "vue2-google-maps": "^0.10.7",
+    "workbox-webpack-plugin": "^6.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
