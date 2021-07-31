@@ -3,7 +3,7 @@ import Vue from 'vue';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import {
   formatUnixtime,
-  googleAPIKey,
+  gooAPIK,
   getFullTrack,
   getLastStates,
   getMonth,
@@ -23,7 +23,7 @@ if ('serviceWorker' in navigator) {
 
 Vue.use(VueGoogleMaps, {
     load: {
-      key: googleAPIKey,
+      key: gooAPIK,
       libraries: 'places'
     },
     installComponents: true,

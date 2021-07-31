@@ -1,7 +1,7 @@
 import { getUnixTime, startOfToday, subMonths, subWeeks, fromUnixTime, format } from 'date-fns';
 import  ruLocale from 'date-fns/locale/ru';
 
-export const googleAPIKey = 'AIzaSyC3c3CMpjbS_c43jYeSSm3Fu2CQnoNu6PY'
+export const gooAPIK = 'AIzaSyC3c3CMpjbS_c43jYeSSm3Fu2CQnoNu6PY'
 
 const autofonAPIURL = 'https://gprs.autofon.ru:9443/jsonapi/';
 const params = {
@@ -65,7 +65,6 @@ export const formatUnixtime = (unixtime) => {
       locale: ruLocale
     });
 }
-
 export const getLastStates = async () => {
     const data = await getDataFromServer('laststates');
     const lastState = data[0];
@@ -79,7 +78,6 @@ export const getLastStates = async () => {
     const tracks = [];
     return {markers, tracks, lastState};
 }
-
 export const getFullTrack = async () => {
     return await getTrack();
 }
