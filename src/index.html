@@ -35,9 +35,13 @@
             <div id="buttons">
                 <button :class="{ active: activeButton=='last' }" @click="getLastPosition">Последняя</button>
                 <button :class="{ active: activeButton=='today' }" @click="getToday">Сегодня</button>
-                <button :class="{ active: activeButton=='week' }" @click="getWeek">Неделя</button>
-                <button :class="{ active: activeButton=='month' }" @click="getMonth">Месяц</button>
-                <button :class="{ active: activeButton=='full' }" @click="getFullTrack">Весь путь</button>
+                <button @click="moreButtons = !moreButtons">...</button>
+                <div v-if="moreButtons">
+                    <button :class="{ active: activeButton=='week' }" @click="getWeek">Неделя</button>
+                    <button :class="{ active: activeButton=='month' }" @click="getMonth">Месяц</button>
+                    <button :class="{ active: activeButton=='full' }" @click="getFullTrack">Весь путь</button>
+                </div>
+
             </div>
             <div id="stat">
                 <div v-if="stat.lastState">

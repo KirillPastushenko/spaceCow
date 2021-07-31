@@ -54,6 +54,7 @@ Vue.use(VueGoogleMaps, {
           infoContent: '',
           infoWindowPos: null,
           infoWinOpen: false,
+          moreButtons: false,
           currentMidx: null,
           infoOptions: {
             pixelOffset: {
