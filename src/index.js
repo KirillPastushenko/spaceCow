@@ -1,5 +1,7 @@
 import './scss/main.scss';
 import Vue from 'vue';
+import { precacheAndRoute } from 'workbox-precaching';
+import { setCatchHandler } from 'workbox-routing';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import {
   formatUnixtime,
@@ -20,6 +22,16 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+precacheAndRoute(self.__WB_MANIFEST);
+
+setCatchHandler(async ({ event }) => {
+  if (event.request.destination === 'document') {
+    return matchPrecache('offline.html')
+  }
+
+  return Response.error()
+})
 
 Vue.use(VueGoogleMaps, {
     load: {
