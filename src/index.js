@@ -23,9 +23,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-if (process.env.NODE_ENV === 'production') {
-  precacheAndRoute(self.__WB_MANIFEST);
-}
+precacheAndRoute(self.__WB_MANIFEST);
+
 setCatchHandler(async ({ event }) => {
   if (event.request.destination === 'document') {
     return matchPrecache('offline.html')
