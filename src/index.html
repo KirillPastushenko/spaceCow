@@ -32,10 +32,14 @@
      </head>
     <body>
         <div id="root">
+            <div :class="{ active: loader }" id="loader"></div>
             <div id="buttons">
                 <button :class="{ active: activeButton=='last' }" @click="getLastPosition">Последняя</button>
                 <button :class="{ active: activeButton=='today' }" @click="getToday">Сегодня</button>
-                <button @click="moreButtons = !moreButtons">...</button>
+                <button class="moreBtn" @click="moreButtons = !moreButtons">
+                    <span v-if="!moreButtons">‹‹‹</span>
+                    <span v-else>›››</span>
+                </button>
                 <div v-if="moreButtons">
                     <button :class="{ active: activeButton=='week' }" @click="getWeek">Неделя</button>
                     <button :class="{ active: activeButton=='month' }" @click="getMonth">Месяц</button>

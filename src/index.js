@@ -56,6 +56,7 @@ Vue.use(VueGoogleMaps, {
           infoWinOpen: false,
           moreButtons: false,
           currentMidx: null,
+          loader: false,
           infoOptions: {
             pixelOffset: {
               width: 0,
@@ -69,6 +70,7 @@ Vue.use(VueGoogleMaps, {
       },
       methods: {
         async getLastPosition() {
+          this.loader = true;
           this.stat = await getLastStates();
           this.activeButton = 'last';
           this.infoWinOpen = false;
@@ -76,26 +78,35 @@ Vue.use(VueGoogleMaps, {
             lat: this.stat.markers[0].position.lat,
             lng: this.stat.markers[0].position.lng
           }
+          this.loader = false;
         },
         async getFullTrack() {
+          this.loader = true;
           this.stat = await getFullTrack();
           this.activeButton = 'full';
           this.infoWinOpen = false;
+          this.loader = false;
         },
         async getMonth() {
+          this.loader = true;
           this.stat = await getMonth();
           this.activeButton = 'month';
           this.infoWinOpen = false;
+          this.loader = false;
         },
         async getWeek() {
+          this.loader = true;
           this.stat = await getWeek();
           this.activeButton = 'week';
           this.infoWinOpen = false;
+          this.loader = false;
         },
         async getToday() {
+          this.loader = true;
           this.stat = await getToday();
           this.activeButton = 'today';
           this.infoWinOpen = false;
+          this.loader = false;
         },
         getFormatedDate(unixtime) {
           return formatUnixtime(unixtime);
