@@ -9,7 +9,7 @@ import {
   getMonth,
   getWeek,
   getToday 
-} from './components/fetch'
+} from './components/utils'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
