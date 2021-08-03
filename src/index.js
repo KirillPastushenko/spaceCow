@@ -77,7 +77,7 @@ Vue.use(VueGoogleMaps, {
           this.center = {
             lat: this.stat.markers[0].position.lat,
             lng: this.stat.markers[0].position.lng
-          }
+          };
           this.loader = false;
         },
         async getFullTrack() {
